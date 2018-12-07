@@ -3,6 +3,9 @@
 // Running:
 //   java CryptoLibTest
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CryptoLib {
 
 	/**
@@ -63,16 +66,6 @@ public class CryptoLib {
 		return amountOfCoPrimes;
 	}
 
-	private static int gcd(int a, int b) {
-		if(a == b)
-			return a;
-
-		if(b == 0){
-			return a;
-		} else {
-			return gcd(b, a%b);
-		}
-	}
 
 	/**
 	 * Returns the value "v" such that "n*v = 1 (mod m)". Returns 0 if the
@@ -99,5 +92,38 @@ public class CryptoLib {
 	public static double HashCP(double n_samples, double size) {
 		return -1;
 	}
+
+	// Help methods below
+
+    public static List<Integer> distinctPrimeFactors(int number){
+
+        List<Integer> primeFactors = new ArrayList<>();
+        int current = 0;
+        for(int i = 2; i< number; i++) {
+            while(number%i == 0) {
+                if(i!=current){
+                    current=i;
+                    primeFactors.add(i);
+                }
+                number = number/i;
+            }
+        }
+        if(number >2) {
+            primeFactors.add(number);
+        }
+
+        return primeFactors;
+    }
+
+    private static int gcd(int a, int b) {
+        if(a == b)
+            return a;
+
+        if(b == 0){
+            return a;
+        } else {
+            return gcd(b, a%b);
+        }
+    }
 
 }
