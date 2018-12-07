@@ -11,15 +11,36 @@ public class CryptoLib {
 	 * common divisor of "a" and "b", and "gcd = a * s + b * t".
 	 **/
 	public static int[] EEA(int a, int b) {
-		// Note: as you can see in the test suite,
-		// your function should work for any (positive) value of a and b.
-		int gcd = -1;
-		int s = -1;
-		int t = -1;
 		int[] result = new int[3];
-		result[0] = gcd;
-		result[1] = s;
-		result[2] = t;
+
+		int previous_s = 1;
+		int previous_t = 0;
+		int previous_r = a;
+		int s = 0;
+		int t = 1;
+		int r = b;
+
+		if(a % b != 0 || a == 1 || b == 1) {
+			while(r != 0) {
+				int q = previous_r / r;
+
+				int temp_prev_r = previous_r;
+				previous_r = r;
+				r = temp_prev_r - q * r;
+
+				int temp_prev_s = previous_s;
+				previous_s = s;
+				s = temp_prev_s - q * s;
+
+				int temp_prev_t = previous_t;
+				previous_t = t;
+				t = temp_prev_t - q * t;
+			}
+		}
+
+		result[0] = previous_r;
+		result[1] = previous_s;
+		result[2] = previous_t;
 		return result;
 	}
 
@@ -27,7 +48,30 @@ public class CryptoLib {
 	 * Returns Euler's Totient for value "n".
 	 **/
 	public static int EulerPhi(int n) {
-		return -1;
+		if(n<1) {
+			return 0;
+		}
+
+		int amountOfCoPrimes = 0;
+
+		// Check for every number smaller than n if they are relatively prime.
+		for (int i = 1; i < n; i++) {
+			if ( gcd(n, i) == 1)
+				amountOfCoPrimes++;
+		}
+
+		return amountOfCoPrimes;
+	}
+
+	private static int gcd(int a, int b) {
+		if(a == b)
+			return a;
+
+		if(b == 0){
+			return a;
+		} else {
+			return gcd(b, a%b);
+		}
 	}
 
 	/**

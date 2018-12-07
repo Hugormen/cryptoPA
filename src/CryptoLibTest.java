@@ -48,7 +48,6 @@ public class CryptoLibTest {
 		errors += TestEulerPhi(1000, 400);
 		errors += TestEulerPhi(157, 156);
 		System.out.println("Total errors in the EulerPhi function " + errors);
-
 	}
 
 	static int TestModInv(int n, int mod, int inv) {
@@ -117,10 +116,9 @@ public class CryptoLibTest {
 	public static void main(String[] args) {
 		TestEEA();
 		TestEulerPhi();
-		TestModInv();
-		TestFermatPT();
-		TestHashCP();
-
+//		TestModInv();
+//		TestFermatPT();
+//		TestHashCP();
 	}
 
 }
