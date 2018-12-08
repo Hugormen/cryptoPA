@@ -75,8 +75,12 @@ public class CryptoLib {
 	 * modular inverse does not exist.
 	 **/
 	public static int ModInv(int n, int m) {
-		return -1;
-	}
+        n = n % m;
+        for (int x = 1; x < m; x++)
+            if ( ((n * x) % m) == 1 || ((n * x) % m) == -(m-1))
+                return x;
+        return 1;
+    }
 
 	/**
 	 * Returns 0 if "n" is a Fermat Prime, otherwise it returns the lowest
