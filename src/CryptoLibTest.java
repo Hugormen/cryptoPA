@@ -117,8 +117,9 @@ public class CryptoLibTest {
 		TestEEA();
 		TestEulerPhi();
 //		TestModInv();
-//		TestFermatPT();
+		TestFermatPT();
 //		TestHashCP();
+
 	}
 
 }

@@ -3,8 +3,11 @@
 // Running:
 //   java CryptoLibTest
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
+
+import static java.math.BigInteger.*;
 
 public class CryptoLib {
 
@@ -80,7 +83,16 @@ public class CryptoLib {
 	 * Fermat Witness. Tests values from 2 (inclusive) to "n/3" (exclusive).
 	 **/
 	public static int FermatPT(int n) {
-		return -1;
+
+        for (int i = 2; i < (n/3); i++) {
+
+            if((longPow(i,n-1,n))!=1){
+             return i;
+            }
+
+        }
+
+		return 0;
 	}
 
 	/**
@@ -124,6 +136,17 @@ public class CryptoLib {
         } else {
             return gcd(b, a%b);
         }
+    }
+
+    public static long longPow(int base, int pow, int n){
+        long product = 1;
+
+        for (int i = 0; i < pow; i++) {
+            product = ((product%(n)) * base)%(n);
+
+        }
+
+        return product;
     }
 
 }
