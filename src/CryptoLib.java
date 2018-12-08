@@ -102,7 +102,13 @@ public class CryptoLib {
 	 * different output values the hash function can produce.
 	 **/
 	public static double HashCP(double n_samples, double size) {
-		return -1;
+        double probAllUnique = 1.0;
+        for (int i = 1; i < n_samples+1; i++) {
+            probAllUnique= probAllUnique*((size-(i-1))/size);
+            
+        }
+
+		return 1-probAllUnique;
 	}
 
 	// Help methods below
