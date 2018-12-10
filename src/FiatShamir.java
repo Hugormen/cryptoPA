@@ -17,7 +17,7 @@ public class FiatShamir {
     }
 
     public static void main(String[] args) {
-        String filename = "input.txt";
+        String filename = "inputFS.txt";
         BigInteger N = BigInteger.ZERO;
         BigInteger X = BigInteger.ZERO;
         ProtocolRun[] runs = new ProtocolRun[10];
