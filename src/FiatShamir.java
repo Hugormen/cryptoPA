@@ -61,19 +61,33 @@ public class FiatShamir {
      */
     private static BigInteger recoverSecret(BigInteger N, BigInteger X,
                                             ProtocolRun[] runs) {
-        BigInteger testR = BigInteger.ZERO;
+        BigInteger firstR = BigInteger.ZERO;
+        BigInteger secondR = BigInteger.ZERO;
         BigInteger firstS = BigInteger.ZERO;
         BigInteger secondS = BigInteger.ZERO;
+        int firstC=0;
+        int secondC=0;
+
+        BigInteger goal = X.mod(N);
+
+        BigInteger xSmall = BigInteger.ZERO;
 
         outerloop:
         for (int i = 0; i < runs.length; i++) {
-            testR = runs[i].R;
+            firstR = runs[i].R;
             for (int j = 0; j <runs.length; j++) {
-                if(j!=i&& testR.subtract(runs[j].R ) == BigInteger.ZERO){
+                if(j!=i && firstR.subtract(runs[j].R ).equals(BigInteger.ZERO) ){
+                    secondR = runs[j].R;
                     firstS = runs[i].s;
                     secondS = runs[j].s;
+                    firstC = runs[i].c;
+                    secondC = runs[j].c;
 
-                    System.out.println("i " + i + " j " + j);
+                    System.out.println("FirstS: " + firstS);
+                    System.out.println("SecondS: " + secondS);
+                    System.out.println("FirstC: " + firstC);
+                    System.out.println("SecondC: " + secondC);
+
                     break outerloop;
                 }
 
@@ -82,9 +96,16 @@ public class FiatShamir {
 
         }
 
+        if(firstC == 1){
+            xSmall = firstS.divide(secondS);
 
+        }
+
+        if(firstC == 0){
+            xSmall = secondS.divide(firstS);
+        }
 
         // TODO. Recover the secret value x such that x^2 = X (mod N).
-        return BigInteger.ZERO;
+        return xSmall;
     }
 }
