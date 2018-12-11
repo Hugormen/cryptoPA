@@ -77,17 +77,11 @@ public class FiatShamir {
             firstR = runs[i].R;
             for (int j = 0; j <runs.length; j++) {
                 if(j!=i && firstR.subtract(runs[j].R ).equals(BigInteger.ZERO) ){
-                    secondR = runs[j].R;
                     firstS = runs[i].s;
                     secondS = runs[j].s;
                     firstC = runs[i].c;
                     secondC = runs[j].c;
-
-                    System.out.println("FirstS: " + firstS);
-                    System.out.println("SecondS: " + secondS);
-                    System.out.println("FirstC: " + firstC);
-                    System.out.println("SecondC: " + secondC);
-
+                    
                     break outerloop;
                 }
 
@@ -96,16 +90,18 @@ public class FiatShamir {
 
         }
 
-        if(firstC == 1){
-            xSmall = firstS.divide(secondS);
+        if(firstC == 1 && secondC == 0){
+            BigInteger inverseOfDivisor = secondS.modInverse(N);
+            xSmall = firstS.multiply(inverseOfDivisor);
 
         }
 
-        if(firstC == 0){
-            xSmall = secondS.divide(firstS);
+        if(firstC == 0 && secondC == 1){
+            BigInteger inverseOfDivisor = firstS.modInverse(N);
+            xSmall = secondS.multiply(inverseOfDivisor);
         }
 
-        // TODO. Recover the secret value x such that x^2 = X (mod N).
-        return xSmall;
+
+        return xSmall.mod(N) ;
     }
 }
