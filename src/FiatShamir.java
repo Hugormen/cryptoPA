@@ -68,9 +68,13 @@ public class FiatShamir {
         int firstC=0;
         int secondC=0;
 
-        BigInteger goal = X.mod(N);
-
         BigInteger xSmall = BigInteger.ZERO;
+
+        /**
+         * find the two inputs with the same R, the nonce.
+         * Save these S:es. S=r^2*x^c
+         * Save these C:s
+         */
 
         outerloop:
         for (int i = 0; i < runs.length; i++) {
@@ -81,7 +85,7 @@ public class FiatShamir {
                     secondS = runs[j].s;
                     firstC = runs[i].c;
                     secondC = runs[j].c;
-                    
+
                     break outerloop;
                 }
 
@@ -89,6 +93,13 @@ public class FiatShamir {
             }
 
         }
+
+        /**
+         * Since one C is 1 and the other 0, we get S1= r^2 * x^1 and S2= r^2*x^0.
+         * By dividing these, we cancel the r^2 and retain x.
+         *
+         * Division is done by calculating the modular inverse of the S with C=0, and multiplying S1 with this inverse.
+         */
 
         if(firstC == 1 && secondC == 0){
             BigInteger inverseOfDivisor = secondS.modInverse(N);
