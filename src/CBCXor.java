@@ -42,7 +42,7 @@ public class CBCXor {
          * E_0: C_0 = K + (M_0 + IV)
          * K  = C_0 + (M_0 + IV)
          *
-         * D: M_0 = (K+C_i)+C_(i-1)
+         * D: M_i = (K+C_i)+C_(i-1)
          */
         for (int i = 0; i < first_block.length ; i++) {
             key[i] = (byte)(encrypted[12+i] ^ (first_block[i] ^ encrypted[i]));
